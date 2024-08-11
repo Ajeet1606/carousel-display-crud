@@ -4,7 +4,6 @@ import {
   InsertEvent,
   UpdateEvent,
 } from "typeorm";
-import logger from "./common/logger";
 
 @EventSubscriber()
 export class ISTDateSubscriber implements EntitySubscriberInterface {
@@ -32,7 +31,7 @@ export class ISTDateSubscriber implements EntitySubscriberInterface {
       const value = entity[field];
       // Convert to IST
       const offsetInMillis = 5.5 * 60 * 60 * 1000;
-      logger.debug("offsetInMillis", offsetInMillis);
+      console.debug("offsetInMillis", offsetInMillis);
       entity[field] = new Date(value.valueOf() + offsetInMillis);
     });
   }

@@ -1,3 +1,3 @@
-export const BACKEND_URL = "https://bid-backend-dev.up.railway.app";
+export const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 export const LOCAL_URL = "http://localhost:8000";
-export const IP = `${LOCAL_URL}/api/v1`;
+export const IP = `${BACKEND_URL}/api/v1`;
