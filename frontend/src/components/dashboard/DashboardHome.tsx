@@ -7,8 +7,10 @@ import UpdateBanner from "./UpdateBanner";
 
 const DashboardHome = () => {
   const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
-  const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false)
-  const [bannerToUpdate, setBannerToUpdate] = useState<BannerTableType>({} as BannerTableType)
+  const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false);
+  const [bannerToUpdate, setBannerToUpdate] = useState<BannerTableType>(
+    {} as BannerTableType
+  );
 
   const getTableData = () => {
     const tableData = data.map((card) => {
@@ -32,8 +34,8 @@ const DashboardHome = () => {
 
   function handleBannerUpdate(key: any): void {
     console.log("Function not implemented.", key);
-    setBannerToUpdate(key)
-    setShowUpdateModal(true)
+    setBannerToUpdate(key);
+    setShowUpdateModal(true);
   }
 
   const columns = [
@@ -62,13 +64,13 @@ const DashboardHome = () => {
       key: "image",
       width: 100,
       render: (image: string) => {
-        return <img src={image} alt="" className="w-[50px] h-[50px]" />;
+        return <img src={image} alt="" className="w-[70px] h-[70px]" />;
       },
     },
     {
-      title: "URL",
-      dataIndex: "url",
-      key: "url",
+      title: "LINK",
+      dataIndex: "link",
+      key: "link",
       width: 100,
     },
     {
@@ -101,13 +103,15 @@ const DashboardHome = () => {
             <span
               id="edit"
               style={{ marginRight: 10, cursor: "pointer" }}
-              onClick={() => {handleBannerUpdate(banner)}}
+              onClick={() => {
+                handleBannerUpdate(banner);
+              }}
             >
               <EditOutlined />
             </span>
             <Popconfirm
-              title="Delete the task"
-              description="Are you sure to delete this query?"
+              title="Delete the banner?"
+              description="Are you sure to delete this banner?"
               onConfirm={() => confirmDelete(banner.key)}
               okText="Yes"
               cancelText="No"
@@ -121,17 +125,23 @@ const DashboardHome = () => {
   ];
   return (
     <>
-    {
-      showCreateModal && <CreateBanner setShowCreateModal={setShowCreateModal}/>
-    }
-    {
-      showUpdateModal && <UpdateBanner setShowUpdateModal={setShowUpdateModal} bannerToUpdate={bannerToUpdate}/>
-    }
+      {showCreateModal && (
+        <CreateBanner setShowCreateModal={setShowCreateModal} />
+      )}
+      {showUpdateModal && (
+        <UpdateBanner
+          setShowUpdateModal={setShowUpdateModal}
+          bannerToUpdate={bannerToUpdate}
+        />
+      )}
       <div className="w-full h-[100vh] font-montserrat">
         <div className="w-4/5 border shadow-md rounded-md mx-auto bg-[#f5f5f5] hover:shadow-2xl p-3 mt-5">
           <div className="w-full mx-auto flex justify-between">
             <h1 className="text-2xl">Dashboard</h1>
-            <Button className="border shadow-md rounded-md bg-[#f5f5f5] p-3 font-montserrat cursor-pointer" onClick={() => setShowCreateModal(true)}>
+            <Button
+              className="border shadow-md rounded-md bg-[#f5f5f5] p-3 font-montserrat cursor-pointer"
+              onClick={() => setShowCreateModal(true)}
+            >
               Create Banner
             </Button>
           </div>
