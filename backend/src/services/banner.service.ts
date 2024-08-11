@@ -55,7 +55,8 @@ class BannerService {
     transactionEntityManager: EntityManager
   ) {
     const bannerRepository = transactionEntityManager.getRepository(Banner);
-    const bannerInstance = bannerRepository.findOneBy({ id });
+    
+    const bannerInstance = await bannerRepository.findOneBy({ id });
     if (!bannerInstance) {
       throw new ResourceNotFoundError("Banner not found");
     }
@@ -63,10 +64,10 @@ class BannerService {
     return res;
   }
 
-  deleteBannerById(id: string) {
+  async deleteBannerById(id: string) {
     const bannerRepository = AppDataSource.getRepository(Banner);
 
-    const bannerInstance = bannerRepository.findOneBy({ id });
+    const bannerInstance = await bannerRepository.findOneBy({ id });
     if (!bannerInstance) {
       throw new ResourceNotFoundError("Banner not found");
     }
