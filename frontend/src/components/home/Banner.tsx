@@ -31,7 +31,7 @@ const Banner = () => {
           <h3>Oops, no more cards to show. 😥</h3>
         </div>
       ) : (
-        <a href={data[currentBanner].url} target="_blank" className="w-2/3">
+        <a href={data[currentBanner].link} target="_blank" className="w-2/3">
           <div
             className="w-full border shadow-md rounded-md mx-auto bg-[#f5f5f5] hover:shadow-2xl p-3 font-montserrat"
             key={currentBanner}

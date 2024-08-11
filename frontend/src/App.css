@@ -1,0 +1,18 @@
+body {
+  font-family: "montserrat";
+}
+/* Apply font to table container */
+.ant-table {
+  font-family: "Montserrat", sans-serif;
+}
+
+/* Apply font to table headers and cells */
+.ant-table-thead th,
+.ant-table-tbody td {
+  font-family: "Montserrat", sans-serif;
+}
+
+/* Apply Montserrat font to the modal title */
+.ant-modal-title {
+  font-family: "Montserrat", sans-serif;
+}

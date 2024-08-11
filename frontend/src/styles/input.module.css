@@ -1,0 +1,58 @@
+.inputDiv {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  label {
+    font-size: var(--font-xs);
+    color: #323232;
+
+    span {
+      color: red;
+    }
+  }
+  input,
+  textarea {
+    font-size: var(--font-xs);
+    padding: 5px 10px;
+    border: 1px solid #e4e6eb;
+    border-radius: 6px;
+  }
+  input {
+    height: 35px;
+  }
+}
+
+.inputFileDiv {
+  width: 100%;
+  label {
+    font-size: var(--font-xs);
+    border: 1px solid #e4e6eb;
+    border-radius: 6px;
+    display: inline-block;
+    padding: 5px 10px;
+    cursor: pointer;
+    width: 100%;
+    height: 35px;
+
+    span {
+      color: red;
+    }
+  }
+  label:hover {
+    border: 1px solid #4096ff !important;
+  }
+  input[type="file"] {
+    display: none;
+  }
+}
+
+input:hover,
+textarea:hover,
+input:focus-visible {
+  border: 1px solid #4096ff !important;
+}
+
+input, textarea{
+    outline: none;
+}
