@@ -1,7 +1,9 @@
-import { Modal, Switch, Button } from "antd";
+import { Modal, Switch, Button, message, Spin } from "antd";
 import Input from "../common/Input";
 import { useState } from "react";
 import { BannerTableType, CreateBannerType } from "../home/data";
+import { useUpdateBannerMutation } from "../../redux/api/bannerSlice";
+import { LoadingOutlined } from "@ant-design/icons";
 
 interface props {
   setShowUpdateModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,11 +17,16 @@ const UpdateBanner: React.FC<props> = ({
   const [inputForm, setInputForm] = useState<CreateBannerType>({
     name: bannerToUpdate.name,
     about: bannerToUpdate.about,
-    timer: bannerToUpdate.timer,
     image: bannerToUpdate.image,
-    link: bannerToUpdate.link,
+    timer: bannerToUpdate.timer,
     visible: bannerToUpdate.visible,
+    link: bannerToUpdate.link,
   });
+
+  const [updateBanner, { isLoading }] = useUpdateBannerMutation();
+  const loadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
+
   const handleTextChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -39,8 +46,20 @@ const UpdateBanner: React.FC<props> = ({
     });
   }
 
-  function handleSubmit(): void {
+  async function handleSubmit() {
     console.log(inputForm, bannerToUpdate);
+    try {
+      const response = await updateBanner({id: bannerToUpdate.key, data: inputForm});
+      if ("error" in response) {
+        const error = response.error as { data: { message: string } };
+        void message.error(error?.data?.message);
+        return;
+      }
+      void message.success(response?.data?.message);
+      setShowUpdateModal(false);
+    } catch (error) {
+      void message.error("Something went wrong");
+    }
   }
 
   return (
@@ -113,7 +132,9 @@ const UpdateBanner: React.FC<props> = ({
           type="primary"
           onClick={handleSubmit}
         >
-          Update Banner
+          {
+            isLoading ? <Spin indicator={loadingIcon} /> : "Update Banner"
+          }
         </Button>
       </div>
     </Modal>

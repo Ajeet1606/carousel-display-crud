@@ -1,11 +1,20 @@
-import { Button, Table, Popconfirm, Switch } from "antd";
+import { Button, Table, Popconfirm, Switch, message } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { BannerTableType, data } from "../home/data";
+import { BannerTableType } from "../home/data";
 import { useState } from "react";
 import CreateBanner from "./CreateBanner";
 import UpdateBanner from "./UpdateBanner";
+import {
+  useGetBannersQuery,
+  useDeleteBannerMutation,
+  useToggleVisibilityMutation,
+} from "../../redux/api/bannerSlice";
 
 const DashboardHome = () => {
+  const { data: banners } = useGetBannersQuery({ page: 1, limit: 10 });
+  const [deleteBanner] = useDeleteBannerMutation();
+  const [toggleVisibility] = useToggleVisibilityMutation();
+
   const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
   const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false);
   const [bannerToUpdate, setBannerToUpdate] = useState<BannerTableType>(
@@ -13,23 +22,44 @@ const DashboardHome = () => {
   );
 
   const getTableData = () => {
-    const tableData = data.map((card) => {
+    const tableData = banners?.data.map((card, index) => {
       return {
         ...card,
-        id: `${card.id}.`,
-        key: card.id,
+        id: `${index + 1}.`,
+        key: `${card.id}`,
       };
     });
 
     return tableData;
   };
 
-  function confirmDelete(key: any): void {
+  async function confirmDelete(key: any) {
     console.log("Function not implemented.", key);
+    try {
+      const response = await deleteBanner(key);
+      if ("error" in response) {
+        const error = response.error as { data: { message: string } };
+        void message.error(error?.data?.message);
+        return;
+      }
+      void message.success(response?.data?.message);
+    } catch (error) {
+      void message.error("Something went wrong");
+    }
   }
 
-  function handleSwitchChange(checked: boolean, key: any): void {
-    console.log("Function not implemented.", key, checked);
+  async function handleSwitchChange(key: string) {
+    try {
+      const response = await toggleVisibility({id: key});
+      if ("error" in response) {
+        const error = response.error as { data: { message: string } };
+        void message.error(error?.data?.message);
+        return;
+      }
+      void message.success(response?.data?.message);
+    } catch (error) {
+      void message.error("Something went wrong");
+    }
   }
 
   function handleBannerUpdate(key: any): void {
@@ -87,7 +117,7 @@ const DashboardHome = () => {
       render: (text: boolean, record: any) => (
         <Switch
           defaultChecked={text}
-          onChange={(checked) => handleSwitchChange(checked, record.key)}
+          onChange={() => handleSwitchChange(record.key)}
         />
       ),
     },
