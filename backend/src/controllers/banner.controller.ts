@@ -60,6 +60,23 @@ class BannerController {
     }
   };
 
+  toggleBannerVisibility: RequestHandler = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const result = await this.__bannerService.toggleBannerVisibility(id);
+      if (!result) {
+        return res
+          .status(200)
+          .send(buildResponse(null, "Banner not found", null));
+      }
+      return res
+        .status(200)
+        .send(buildResponse(result, "Banner updated successfully", null));
+    } catch (error) {
+      errorHandler(res, error);
+    }
+  };
+
   updateBannerById: RequestHandler = async (req: Request, res: Response) => {
     try {
       const { id } = req.params;

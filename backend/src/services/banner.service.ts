@@ -38,6 +38,17 @@ class BannerService {
     return res;
   }
 
+  async toggleBannerVisibility(id: string) {
+    const bannerRepository = AppDataSource.getRepository(Banner);
+    const bannerInstance = await bannerRepository.findOneBy({ id });
+    if (!bannerInstance) {
+      throw new ResourceNotFoundError("Banner not found");
+    }
+    bannerInstance.visible = !bannerInstance.visible;
+    const res = await bannerRepository.save(bannerInstance);
+    return res;
+  }
+
   async updateBannerById(
     id: string,
     payload: BannerSchemaType,

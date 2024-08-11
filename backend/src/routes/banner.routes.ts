@@ -7,6 +7,7 @@ const bannerRouter = Router();
 
 const bannerController = new BannerController()
 
+bannerRouter.post("/toggle-visibility/:id", bannerController.toggleBannerVisibility);
 bannerRouter.post("/", bodySchemaValidator(bannerSchema), bannerController.createBanner);
 bannerRouter.get("/", bannerController.getAllBanners);
 bannerRouter.get("/:id", bannerController.getBannerById);
