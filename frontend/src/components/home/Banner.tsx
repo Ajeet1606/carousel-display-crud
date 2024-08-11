@@ -37,7 +37,7 @@ const Banner = () => {
         <a
           href={banners?.data[currentBanner].link}
           target="_blank"
-          className="w-2/3"
+          className="w-[90%] md:w-2/3"
         >
           <div
             className="w-full border shadow-md rounded-md mx-auto bg-[#f5f5f5] hover:shadow-2xl p-3 font-montserrat"
@@ -48,7 +48,7 @@ const Banner = () => {
               alt=""
               className="w-[150px] h-[150px] rounded-md float-left mr-2 mb-2"
             />
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center gap-2">
               <h3 className="text-3xl font-bold">
                 {banners?.data[currentBanner].name}
               </h3>

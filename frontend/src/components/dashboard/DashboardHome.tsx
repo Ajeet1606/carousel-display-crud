@@ -166,8 +166,8 @@ const DashboardHome = () => {
       )}
       <div className="w-full h-[100vh] font-montserrat">
         <div className="w-4/5 border shadow-md rounded-md mx-auto bg-[#f5f5f5] hover:shadow-2xl p-3 mt-5">
-          <div className="w-full mx-auto flex justify-between">
-            <h1 className="text-2xl">Dashboard</h1>
+          <div className="w-full mx-auto flex justify-between gap-2">
+            <h1 className="text-xl md:text-2xl">Dashboard</h1>
             <Button
               className="border shadow-md rounded-md bg-[#f5f5f5] p-3 font-montserrat cursor-pointer"
               onClick={() => setShowCreateModal(true)}
