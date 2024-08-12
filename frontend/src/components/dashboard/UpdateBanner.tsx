@@ -23,7 +23,7 @@ const UpdateBanner: React.FC<props> = ({
     link: bannerToUpdate.link,
   });
 
-  const [updateBanner, { isLoading }] = useUpdateBannerMutation();
+  const [updateBanner, { isLoading, isError, error }] = useUpdateBannerMutation();
   const loadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 
@@ -47,9 +47,23 @@ const UpdateBanner: React.FC<props> = ({
   }
 
   async function handleSubmit() {
-    console.log(inputForm, bannerToUpdate);
+    if(!inputForm.name || !inputForm.about || !inputForm.image || !inputForm.link || !inputForm.timer) {
+      void message.error("All fields are required");
+      return;
+    }
     try {
       const response = await updateBanner({id: bannerToUpdate.key, data: inputForm});
+       
+      if(isError) {
+        if("status" in error){
+          if(error.status === "FETCH_ERROR"){
+            void message.error("Too many requests. Please try again later");
+            setShowUpdateModal(false);
+            return;
+          }
+        }
+      }
+      
       if ("error" in response) {
         const error = response.error as { data: { message: string } };
         void message.error(error?.data?.message);
@@ -127,15 +141,16 @@ const UpdateBanner: React.FC<props> = ({
           />
         </div>
 
-        <Button
-          className="font-montserrat cursor-pointer h-9"
-          type="primary"
+        <div
+          className="font-montserrat cursor-pointer h-9 flex items-center justify-center border shadow rounded shadow-red-400 hover:text-red-400"
           onClick={handleSubmit}
         >
-          {
-            isLoading ? <Spin indicator={loadingIcon} /> : "Update Banner"
-          }
-        </Button>
+          {isLoading ? (
+            <Spin indicator={loadingIcon}/>
+          ) : (
+            <h3 className="text-center">Update Banner</h3>
+          )}
+        </div>
       </div>
     </Modal>
   );

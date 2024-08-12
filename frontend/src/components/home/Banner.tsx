@@ -42,7 +42,7 @@ const Banner: React.FC<props> = ({ banners }) => {
           className="w-[90%] md:w-2/3"
         >
           <div
-            className="w-full border shadow-md rounded-md mx-auto bg-[#f5f5f5] hover:shadow-2xl p-3 font-montserrat"
+            className="w-full border shadow-md shadow-red-400 rounded-md mx-auto bg-[#f5f5f5] p-3 font-montserrat"
             key={currentBanner}
           >
             <img
@@ -51,10 +51,10 @@ const Banner: React.FC<props> = ({ banners }) => {
               className="w-[150px] h-[150px] rounded-md float-left mr-2 mb-2"
             />
             <div className="flex justify-between items-center gap-2">
-              <h3 className="text-3xl font-bold">
+              <h3 className="text-3xl font-bold text-red-400">
                 {banners[currentBanner].name}
               </h3>
-              <span className="text-xl inset-0 animate-slide-down" key={count}>
+              <span className="text-xl inset-0 animate-slide-down text-red-400" key={count}>
                 {count}
               </span>
             </div>

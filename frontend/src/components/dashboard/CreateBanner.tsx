@@ -10,14 +10,14 @@ interface props {
 }
 
 const CreateBanner: React.FC<props> = ({ setShowCreateModal }) => {
-    const [inputForm, setInputForm] = useState<CreateBannerType>({
-        name: "",
-        about: "",
-        timer: 0,
-        image: "",
-        link: "",
-        visible: true
-    })
+  const [inputForm, setInputForm] = useState<CreateBannerType>({
+    name: "",
+    about: "",
+    timer: 0,
+    image: "",
+    link: "",
+    visible: true,
+  });
 
   const [createBanner, { isLoading }] = useCreateBannerMutation();
   const loadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -49,6 +49,10 @@ const CreateBanner: React.FC<props> = ({ setShowCreateModal }) => {
   }
 
   async function handleSubmit() {
+    if(!inputForm.name || !inputForm.about || !inputForm.timer || !inputForm.image || !inputForm.link) {
+      void message.error("All fields are required");
+      return;
+    }
     try {
       const response = await createBanner(inputForm);
       if ("error" in response) {
@@ -117,15 +121,21 @@ const CreateBanner: React.FC<props> = ({ setShowCreateModal }) => {
           <label htmlFor="switch">Visibility</label>
           <Switch
             className="w-3"
+            defaultChecked={true}
             onChange={(checked) => handleSwitchChange(checked)}
           />
         </div>
 
-        <Button className="font-montserrat cursor-pointer h-9" type="primary" onClick={handleSubmit}>
-          {
-            isLoading ? <Spin indicator={loadingIcon} /> : "Create Banner"
-          }
-        </Button>
+        <div
+          className="font-montserrat cursor-pointer h-9 flex items-center justify-center border shadow rounded shadow-red-400 hover:text-red-400"
+          onClick={handleSubmit}
+        >
+          {isLoading ? (
+            <Spin indicator={loadingIcon}/>
+          ) : (
+            <h3 className="text-center">Create Banner</h3>
+          )}
+        </div>
       </div>
     </Modal>
   );

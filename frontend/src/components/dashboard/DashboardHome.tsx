@@ -9,11 +9,13 @@ import {
   useDeleteBannerMutation,
   useToggleVisibilityMutation,
 } from "../../redux/api/bannerSlice";
+import { NavLink } from "react-router-dom";
 
 const DashboardHome = () => {
   const { data: banners } = useGetBannersQuery({ page: 1, limit: 10 });
+  
   const [deleteBanner] = useDeleteBannerMutation();
-  const [toggleVisibility] = useToggleVisibilityMutation();
+  const [toggleVisibility, { error:toggleError, isError: isToggleError }] = useToggleVisibilityMutation();
 
   const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
   const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false);
@@ -50,7 +52,16 @@ const DashboardHome = () => {
 
   async function handleSwitchChange(key: string) {
     try {
-      const response = await toggleVisibility({id: key});
+      const response = await toggleVisibility({ id: key });
+      if(isToggleError){
+        if("status" in toggleError){
+          if(toggleError.status === "FETCH_ERROR"){
+            void message.error("Too many requests. Please try again later");
+            setShowUpdateModal(false);
+            return;
+          }
+        }
+      }
       if ("error" in response) {
         const error = response.error as { data: { message: string } };
         void message.error(error?.data?.message);
@@ -73,7 +84,7 @@ const DashboardHome = () => {
       title: "Serial No.",
       dataIndex: "id",
       key: "id",
-      width: 100,
+      width: 80,
       fixed: "left" as const,
     },
     {
@@ -94,11 +105,11 @@ const DashboardHome = () => {
       key: "image",
       width: 100,
       render: (image: string) => {
-        return <img src={image} alt="" className="w-[70px] h-[70px]" />;
+        return <img src={image} alt="" className="w-[70px] h-[70px] rounded" />;
       },
     },
     {
-      title: "LINK",
+      title: "Link",
       dataIndex: "link",
       key: "link",
       width: 100,
@@ -122,10 +133,10 @@ const DashboardHome = () => {
       ),
     },
     {
-      title: "Action",
+      title: "Actions",
       dataIndex: "action",
       key: "action",
-      width: 100,
+      width: 85,
       fixed: "right" as const,
       render: (_: string, banner: BannerTableType) => {
         return (
@@ -153,6 +164,7 @@ const DashboardHome = () => {
       },
     },
   ];
+  
   return (
     <>
       {showCreateModal && (
@@ -164,16 +176,23 @@ const DashboardHome = () => {
           bannerToUpdate={bannerToUpdate}
         />
       )}
-      <div className="w-full h-[100vh] font-montserrat">
-        <div className="w-4/5 border shadow-md rounded-md mx-auto bg-[#f5f5f5] hover:shadow-2xl p-3 mt-5">
+      <div className="w-full h-[95vh] font-montserrat flex justify-between px-2">
+        <NavLink to="/">
+          <div>
+            <h3 className="border shadow rounded-md mx-auto bg-[#f5f5f5]  shadow-red-400 px-3 py-2 mt-2 hover:text-red-400">
+              Home
+            </h3>
+          </div>
+        </NavLink>
+        <div className="w-4/5 border shadow-md rounded-md mx-auto bg-[#f5f5f5]  shadow-red-400 p-3 mt-2">
           <div className="w-full mx-auto flex justify-between gap-2">
-            <h1 className="text-xl md:text-2xl">Dashboard</h1>
-            <Button
-              className="border shadow-md rounded-md bg-[#f5f5f5] p-3 font-montserrat cursor-pointer"
+            <h1 className="text-xl md:text-2xl text-red-400">Dashboard</h1>
+            <div
+              className="border shadow shadow-red-400 hover:text-red-400 rounded-md bg-[#f5f5f5] px-3 py-2 font-montserrat cursor-pointer flex items-center"
               onClick={() => setShowCreateModal(true)}
             >
               Create Banner
-            </Button>
+            </div>
           </div>
 
           <div className="mt-4">

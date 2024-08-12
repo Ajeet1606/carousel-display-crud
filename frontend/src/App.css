@@ -15,4 +15,16 @@ body {
 /* Apply Montserrat font to the modal title */
 .ant-modal-title {
   font-family: "Montserrat", sans-serif;
+  color: #F87171 !important;
+}
+
+.ant-switch-checked {
+  background-color: #F87171 !important;
+}
+
+.ant-pagination .ant-pagination-item-active a{
+  color: #F87171 !important;
+}
+.ant-pagination .ant-pagination-item-active{
+  border-color: #F87171;
 }

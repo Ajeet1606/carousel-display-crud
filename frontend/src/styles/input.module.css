@@ -40,7 +40,7 @@
     }
   }
   label:hover {
-    border: 1px solid #4096ff !important;
+    border: 1px solid #F87171 !important;
   }
   input[type="file"] {
     display: none;
@@ -50,7 +50,7 @@
 input:hover,
 textarea:hover,
 input:focus-visible {
-  border: 1px solid #4096ff !important;
+  border: 1px solid #F87171 !important;
 }
 
 input, textarea{
