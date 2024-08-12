@@ -1,5 +1,5 @@
 import { Button, Table, Popconfirm, Switch, message } from "antd";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, LeftOutlined, LeftSquareOutlined } from "@ant-design/icons";
 import { BannerTableType } from "../home/data";
 import { useState } from "react";
 import CreateBanner from "./CreateBanner";
@@ -176,22 +176,22 @@ const DashboardHome = () => {
           bannerToUpdate={bannerToUpdate}
         />
       )}
-      <div className="w-full h-[95vh] font-montserrat flex justify-between px-2">
-        <NavLink to="/">
+      <div className="w-full h-[95vh] font-montserrat md:flex justify-between px-2">
+        <NavLink to="/" className="w-fit block">
           <div>
             <h3 className="border shadow rounded-md mx-auto bg-[#f5f5f5]  shadow-red-400 px-3 py-2 mt-2 hover:text-red-400">
-              Home
+              <LeftOutlined />
             </h3>
           </div>
         </NavLink>
         <div className="w-4/5 border shadow-md rounded-md mx-auto bg-[#f5f5f5]  shadow-red-400 p-3 mt-2">
           <div className="w-full mx-auto flex justify-between gap-2">
-            <h1 className="text-xl md:text-2xl text-red-400">Dashboard</h1>
+            <h1 className="text-sm md:text-2xl text-red-400">Dashboard</h1>
             <div
-              className="border shadow shadow-red-400 hover:text-red-400 rounded-md bg-[#f5f5f5] px-3 py-2 font-montserrat cursor-pointer flex items-center"
+              className="border shadow shadow-red-400 hover:text-red-400 rounded-md bg-[#f5f5f5] p-1 md:px-3 md:py-2 font-montserrat cursor-pointer flex items-center"
               onClick={() => setShowCreateModal(true)}
             >
-              Create Banner
+              <h3 className="text-sm">Create Banner</h3>
             </div>
           </div>
 
@@ -199,7 +199,7 @@ const DashboardHome = () => {
             <Table
               dataSource={getTableData()}
               columns={columns}
-              scroll={{ x: "max-content", y: 350 }}
+              scroll={{ x: "max-content", y: 'calc(100vh - 260px)' }}
             />
           </div>
         </div>
