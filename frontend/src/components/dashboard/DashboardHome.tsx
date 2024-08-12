@@ -199,7 +199,7 @@ const DashboardHome = () => {
             <Table
               dataSource={getTableData()}
               columns={columns}
-              scroll={{ x: "max-content", y: 'calc(100vh - 260px)' }}
+              scroll={{ x: "max-content", y: 'calc(100vh - 300px)' }}
             />
           </div>
         </div>
